@@ -40,6 +40,7 @@ public class PowerUpManager : MonoBehaviour
     {
         if (powerUpList.Count >= maxPowerUpAmount)
         {
+            RemovePowerUp(powerUpList[0]);
             return;
         }
 
