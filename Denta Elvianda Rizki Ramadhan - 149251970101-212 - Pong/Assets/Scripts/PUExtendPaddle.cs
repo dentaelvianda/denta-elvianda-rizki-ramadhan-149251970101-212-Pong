@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PUSpeedUpController : MonoBehaviour
+public class PUExtendPaddle : MonoBehaviour
 {
     public PowerUpManager manager;
     public Collider2D ball;
-    public float magnitude, spawnDuration,effectDuration;
-    private float timer,effectTimer;
+    private bool isRight;
+    public GameObject paddleKanan;
+    public GameObject paddleKiri;
+    public float spawnDuration, effectDuration,multiplier;
+    private float timer, effectTimer;
     public bool ballisActive = false;
 
     private void Start()
@@ -20,11 +23,19 @@ public class PUSpeedUpController : MonoBehaviour
         //Collision Detection
         if (collision == ball)
         {
-            ball.GetComponent<BallController>().ActivatePUSpeedUp(magnitude);
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            ballisActive = true;
+            if (isRight)
+            {
+                paddleKanan.GetComponent<PaddleController>().ActivatePUExtendPaddle(multiplier);//Extend Right Paddle
+            }
+            else
+            {
+                paddleKiri.GetComponent<PaddleController>().ActivatePUExtendPaddle(multiplier);//Extend Left Paddle
+            }
             
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
+            ballisActive = true;
+
             Debug.Log("Kena Effect");
         }
     }
@@ -33,7 +44,7 @@ public class PUSpeedUpController : MonoBehaviour
     {
         //Start Timer
         timer += Time.deltaTime;
-        
+
         //Timer for Spawn
         // Note : Nilai Spawn Duration == Spawn Interval
         if (timer >= spawnDuration)
@@ -43,23 +54,24 @@ public class PUSpeedUpController : MonoBehaviour
         }
         //Timer for Effect
         effectTimer += Time.deltaTime;
-        if (ballisActive== true)
+        if (ballisActive == true)
         {
-            
+
             if (effectTimer >= effectDuration)
             {
                 effectTimer -= effectDuration;
                 DeactiveEffect();
             }
         }
-        Debug.Log("Kena Effect" + ballisActive);
+        Debug.Log("Kena Effect Paddle 2" + ballisActive);
     }
 
     private void DeactiveEffect()
     {
-        ball.GetComponent<BallController>().DeactivatePUSpeedUp(magnitude);
+        paddleKanan.GetComponent<PaddleController>().DeactivatePUExtendPaddle(multiplier);
+        paddleKiri.GetComponent<PaddleController>().DeactivatePUExtendPaddle(multiplier);
         effectTimer = 0;
         ballisActive = false;
-      
+
     }
 }

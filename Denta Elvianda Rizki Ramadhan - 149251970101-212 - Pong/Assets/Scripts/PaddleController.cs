@@ -8,6 +8,7 @@ public class PaddleController : MonoBehaviour
     public KeyCode upKey;
     public KeyCode downKey;
     private Rigidbody2D rig;
+    public bool isRight;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,5 +39,24 @@ public class PaddleController : MonoBehaviour
     {
         Debug.Log("Test" + movement);
         rig.velocity= movement;
+    }
+
+    
+    public void ActivatePUExtendPaddle(float multiplier)
+    {
+        transform.localScale += new Vector3(transform.localScale.x*1f,transform.localScale.y*multiplier,2);
+        //Extend the Paddle
+    }
+    public void DeactivatePUExtendPaddle(float multiplier)
+    {
+        transform.localScale -= new Vector3(transform.localScale.x * 1f, transform.localScale.y * multiplier, 2);//De-Extend the Paddle
+    }
+    public void ActivatePUSpeedUpPaddle(float multiplier)
+    {
+        rig.velocity *= multiplier;//Activate Speed
+    }
+    public void DeactivatePUSpeedUpPaddle(float multiplier)
+    {
+        rig.velocity /= multiplier;//De-Activate Speed
     }
 }

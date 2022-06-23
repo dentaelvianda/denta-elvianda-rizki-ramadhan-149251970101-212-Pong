@@ -30,7 +30,7 @@ public class PowerUpManager : MonoBehaviour
            timer -= spawnInterval;
         }
     }
-
+    
     public void GenerateRandomPowerUp()
     {
         GenerateRandomPowerUp(new Vector2(Random.Range(powerUpAreaMin.x, powerUpAreaMax.x), Random.Range(powerUpAreaMin.y, powerUpAreaMax.y)));
@@ -38,12 +38,11 @@ public class PowerUpManager : MonoBehaviour
 
     public void GenerateRandomPowerUp(Vector2 position)
     {
-        if (powerUpList.Count >= maxPowerUpAmount)
+        if(powerUpList.Count >= maxPowerUpAmount)
         {
-            RemovePowerUp(powerUpList[0]);
             return;
         }
-
+        
         if (position.x < powerUpAreaMin.x ||
           position.x > powerUpAreaMax.x ||
           position.y < powerUpAreaMin.y ||
