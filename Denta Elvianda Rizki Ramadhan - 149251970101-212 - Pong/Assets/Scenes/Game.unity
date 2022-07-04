@@ -331,9 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: {x: 5, y: 0}
   resetPosition: {x: 0, y: 0}
-  ball: {fileID: 0}
   isRight: 0
-  lastcollision: 
 --- !u!50 &254155137
 Rigidbody2D:
   serializedVersion: 4
@@ -1212,7 +1210,6 @@ MonoBehaviour:
   speed: 5
   upKey: 119
   downKey: 115
-  isRight: 0
 --- !u!50 &924542031
 Rigidbody2D:
   serializedVersion: 4
@@ -1804,11 +1801,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 2030501162}
   ball: {fileID: 254155138}
-  spawnDuration: 4
-  effectDuration: 3
-  multiplier: 2
-  effectisActive: 0
-  ballController: {fileID: 254155136}
+  spawnDuration: 5
+  effectDuration: 5
+  multiplier: 4
+  lastCollision: {fileID: 254155136}
+  paddleKanan: {fileID: 1476966706}
+  paddleKiri: {fileID: 924542030}
 --- !u!1 &1425129437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,7 +1941,6 @@ MonoBehaviour:
   speed: 5
   upKey: 105
   downKey: 107
-  isRight: 1
 --- !u!50 &1476966707
 Rigidbody2D:
   serializedVersion: 4
@@ -2165,7 +2162,7 @@ MonoBehaviour:
   ball: {fileID: 254155138}
   magnitude: 2
   spawnDuration: 5
-  effectDuration: 3
+  effectDuration: 5
   ballisActive: 0
 --- !u!61 &1602426147
 BoxCollider2D:
@@ -2491,12 +2488,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 2030501162}
   ball: {fileID: 254155138}
-  paddleKanan: {fileID: 1476966703}
-  paddleKiri: {fileID: 924542027}
-  spawnDuration: 2
-  effectDuration: 3
+  spawnDuration: 5
+  effectDuration: 5
   multiplier: 2
-  ballisActive: 0
+  lastCollision: {fileID: 254155136}
+  paddleKanan: {fileID: 1476966706}
+  paddleKiri: {fileID: 924542030}
 --- !u!1 &1881302662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2689,10 +2686,12 @@ MonoBehaviour:
   spawnArea: {fileID: 730616320}
   maxPowerUpAmount: 3
   spawnInterval: 5
-  powerUpAreaMin: {x: -7, y: -1}
-  powerUpAreaMax: {x: 7, y: 1}
+  powerUpAreaMin: {x: -7, y: -3}
+  powerUpAreaMax: {x: 7, y: 3}
   powerUpTemplateList:
   - {fileID: 1262446009}
+  - {fileID: 1602426144}
+  - {fileID: 1701196111}
 --- !u!1 &2060153348
 GameObject:
   m_ObjectHideFlags: 0

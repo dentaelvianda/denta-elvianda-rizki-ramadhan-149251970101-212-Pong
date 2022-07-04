@@ -7,7 +7,6 @@ public class BallController : MonoBehaviour
     public Vector2 speed;
     public Vector2 resetPosition;
     private Rigidbody2D rig;
-    public Collider2D ball;
     public bool isRight;
 
     // Start is called before the first frame update
@@ -15,11 +14,13 @@ public class BallController : MonoBehaviour
     {
         rig = GetComponent<Rigidbody2D>();
         rig.velocity = speed;
-
+        //isRight = false;
     }
+
     public void Update()
     {
         Debug.Log("Speed Bola:" + rig.velocity);
+        Debug.Log("Last Collision" + isRight);
     }
 
     public void ResetBall()
@@ -28,17 +29,20 @@ public class BallController : MonoBehaviour
         rig.velocity = speed;
     }
 
-    public string lastcollision;
-    public void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collisionInfo)
     {
-        lastcollision = collision.collider.tag;
-        string name = collision.collider.name;
-        if (lastcollision == "paddleKanan")
+        if(collisionInfo.collider.tag == "paddleKiri")
         {
+            
+            isRight = false;
+            
+        }
+        else if(collisionInfo.collider.tag == "paddleKanan")
+        {
+            
             isRight = true;
         }
     }
-
     public void ActivatePUSpeedUp(float magnitude)
     {
         rig.velocity *= magnitude;

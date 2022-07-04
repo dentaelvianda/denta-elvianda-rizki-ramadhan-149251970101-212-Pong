@@ -6,39 +6,38 @@ public class PUExtendPaddle : MonoBehaviour
 {
     public PowerUpManager manager;
     public Collider2D ball;
-    private bool isRight;
-    public GameObject paddleKanan;
-    public GameObject paddleKiri;
     public float spawnDuration, effectDuration,multiplier;
     private float timer, effectTimer;
-    public bool ballisActive = false;
+    private bool leftActive, RightActive;
+    public BallController lastCollision;
+    public PaddleController paddleKanan,paddleKiri;
 
-    private void Start()
+    public void Start()
     {
         timer = 0;
         effectTimer = 0;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         //Collision Detection
         if (collision == ball)
         {
-            if (isRight)
+            if (lastCollision.isRight == true)
             {
-                paddleKanan.GetComponent<PaddleController>().ActivatePUExtendPaddle(multiplier);//Extend Right Paddle
+                paddleKanan.GetComponent<PaddleController>().ActivatePUExtendPaddle(multiplier);
+                RightActive = true;
             }
-            else
+            else if(lastCollision.isRight == false)
             {
-                paddleKiri.GetComponent<PaddleController>().ActivatePUExtendPaddle(multiplier);//Extend Left Paddle
+                paddleKiri.GetComponent<PaddleController>().ActivatePUExtendPaddle(multiplier);
+                leftActive = true;
             }
-            
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
-            ballisActive = true;
-
             Debug.Log("Kena Effect");
         }
     }
+    
 
     private void Update()
     {
@@ -51,27 +50,46 @@ public class PUExtendPaddle : MonoBehaviour
         {
             manager.RemovePowerUp(gameObject);
             timer -= spawnDuration;
+            
         }
         //Timer for Effect
         effectTimer += Time.deltaTime;
-        if (ballisActive == true)
+        if(leftActive == true)
         {
-
-            if (effectTimer >= effectDuration)
+            if(effectTimer >= effectDuration)
             {
                 effectTimer -= effectDuration;
-                DeactiveEffect();
+                DeactiveEffectLeft();
             }
         }
-        Debug.Log("Kena Effect Paddle 2" + ballisActive);
+
+        if (RightActive == true)
+        {
+            if(effectTimer >= effectDuration)
+            {
+                effectTimer -= effectDuration;
+                DeactiveEffectRight();
+            }
+        }
+
+        Debug.Log("Kena Effect Paddle left" + leftActive);
+        Debug.Log("Kena Effect Paddle right" + RightActive);
     }
 
-    private void DeactiveEffect()
+    private void DeactiveEffectLeft()
     {
+        
+            paddleKiri.GetComponent<PaddleController>().DeactivatePUExtendPaddle(multiplier);
+            effectTimer = 0;
+            leftActive = false;
+
+    }
+    private void DeactiveEffectRight()
+    {
+
         paddleKanan.GetComponent<PaddleController>().DeactivatePUExtendPaddle(multiplier);
-        paddleKiri.GetComponent<PaddleController>().DeactivatePUExtendPaddle(multiplier);
         effectTimer = 0;
-        ballisActive = false;
+        RightActive = false;
 
     }
 }
