@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PaddleController : MonoBehaviour
 {
-    public int speed;
+    public float speed;
     public KeyCode upKey;
     public KeyCode downKey;
     private Rigidbody2D rig;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,7 @@ public class PaddleController : MonoBehaviour
     void Update()
     {
         MoveObject(GetInput());
+        Debug.Log("Kecepatan :" + rig.velocity);
     }
     private Vector2 GetInput()
     {
@@ -38,5 +41,29 @@ public class PaddleController : MonoBehaviour
     {
         Debug.Log("Test" + movement);
         rig.velocity= movement;
+    }
+
+    
+    public void ActivatePUExtendPaddle(float multiplier)
+    {
+        Vector3 newscale = transform.localScale;
+        newscale.y *= multiplier;
+        transform.localScale = newscale;
+        //Extend the Paddle
+    }
+    public void DeactivatePUExtendPaddle(float multiplier)
+    {
+        Vector3 newscale = transform.localScale;
+        newscale.y /= multiplier;
+        transform.localScale = newscale;
+        //De-Extend the Paddle
+    }
+    public void ActivatePUSpeedUpPaddle(float multiplier)
+    {
+        speed *= multiplier;//Activate Speed
+    }
+    public void DeactivatePUSpeedUpPaddle(float multiplier)
+    {
+        speed /= multiplier;//De-Activate Speed
     }
 }

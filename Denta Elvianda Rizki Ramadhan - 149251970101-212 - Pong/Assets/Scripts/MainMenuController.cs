@@ -13,4 +13,8 @@ public class MainMenuController : MonoBehaviour
     {
         Debug.Log("Created by Denta Elvianda Rizki Ramadhan - 149251970101-212");
     }
+    public void OpenLink()
+    {
+        Application.OpenURL("https://github.com/dentaelvianda");
+    }
 }
